@@ -1,0 +1,19 @@
+{"items":[
+ {"kind":"Namespace","metadata":{"name":"default"}},
+ {"kind":"Namespace","metadata":{"name":"production"}},
+ {"kind":"Pod","metadata":{"name":"api-1","namespace":"default","uid":"pod-api","labels":{"app":"api"},"creationTimestamp":"2026-09-07T00:00:00Z"},"spec":{"nodeName":"node-a","containers":[{"name":"api"},{"name":"sidecar"}]},"status":{"phase":"Running","podIP":"10.0.0.2","containerStatuses":[{"ready":true,"restartCount":2,"state":{"running":{}}},{"ready":true,"restartCount":0,"state":{"running":{}}}]}},
+ {"kind":"Pod","metadata":{"name":"worker-1","namespace":"production","uid":"pod-worker"},"spec":{"nodeName":"node-a","containers":[{"name":"worker"}]},"status":{"phase":"Pending","containerStatuses":[{"ready":false,"restartCount":4,"state":{"waiting":{"reason":"CrashLoopBackOff"}}}]}},
+ {"kind":"Service","metadata":{"name":"api","namespace":"default"},"spec":{"selector":{"app":"api"},"type":"ClusterIP","clusterIP":"10.0.0.1","ports":[{"port":80,"protocol":"TCP"}]}},
+ {"kind":"Deployment","metadata":{"name":"api","namespace":"default","generation":2,"annotations":{"deployment.kubernetes.io/revision":"7"}},"spec":{"replicas":3,"selector":{"matchLabels":{"app":"api"}}},"status":{"observedGeneration":2,"readyReplicas":2,"updatedReplicas":3,"availableReplicas":2}},
+ {"kind":"StatefulSet","metadata":{"name":"postgres","namespace":"production","generation":1},"spec":{"replicas":1},"status":{"observedGeneration":1,"readyReplicas":1,"updatedReplicas":1,"updateRevision":"postgres-abc"}},
+ {"kind":"DaemonSet","metadata":{"name":"agent","namespace":"default"},"status":{"numberReady":2,"desiredNumberScheduled":2,"updatedNumberScheduled":2,"numberAvailable":2}},
+ {"kind":"Job","metadata":{"name":"migration","namespace":"default"},"spec":{"completions":1},"status":{"succeeded":1,"conditions":[{"type":"Complete","status":"True"}]}},
+ {"kind":"CronJob","metadata":{"name":"backup","namespace":"production"},"spec":{"schedule":"0 2 * * *","suspend":true},"status":{"active":[{"name":"backup-1"}],"lastScheduleTime":"2026-09-06T02:00:00Z"}},
+ {"kind":"Ingress","metadata":{"name":"api","namespace":"default"},"spec":{"ingressClassName":"traefik","rules":[{"host":"api.example.test","http":{"paths":[{"path":"/","backend":{"service":{"name":"api","port":{"number":80}}}}]}}]},"status":{"loadBalancer":{"ingress":[{"ip":"192.0.2.10"}]}}},
+ {"kind":"PersistentVolumeClaim","metadata":{"name":"pg-data","namespace":"production"},"spec":{"storageClassName":"local-path","volumeName":"pv-postgres"},"status":{"phase":"Bound","capacity":{"storage":"20Gi"}}},
+ {"kind":"Event","metadata":{"name":"api-started","namespace":"default","creationTimestamp":"2026-09-07T00:01:00Z"},"type":"Normal","reason":"Started","count":1,"message":"Started container api","involvedObject":{"kind":"Pod","name":"api-1"}},
+ {"kind":"Event","metadata":{"name":"worker-backoff","namespace":"production","creationTimestamp":"2026-09-07T00:00:00Z"},"type":"Warning","reason":"BackOff","count":3,"series":{"count":9,"lastObservedTime":"2026-09-07T00:03:00Z"},"message":"Back-off restarting failed container","involvedObject":{"kind":"Pod","name":"worker-1"}},
+ {"kind":"Secret","metadata":{"name":"app-secret","namespace":"default"},"type":"Opaque","data":{"token":"ZGVtby1vbmx5LXRva2Vu"}},
+ {"kind":"ConfigMap","metadata":{"name":"app-config","namespace":"default"},"data":{"app.yaml":"enabled: true\nreplicas: 3\nname: \"api\"\n# configuration\n","options.json":"{\"debug\":false,\"port\":8080}"}},
+ {"kind":"Node","metadata":{"name":"node-a"},"status":{"conditions":[{"type":"Ready","status":"True"}],"addresses":[{"type":"InternalIP","address":"10.0.0.10"},{"type":"ExternalIP","address":"192.0.2.10"}],"nodeInfo":{"kubeletVersion":"v1.34.0"},"capacity":{"cpu":"8","memory":"16384Ki"}}}
+]}

@@ -1,0 +1,11 @@
+# Binaries and build artifacts
+kiwikube
+
+# IDE and test artifacts
+*.tmp
+*.swp
+*~
+
+# Generated screenshots/captures (keep this directory if you want committed screenshots)
+tmp/
+

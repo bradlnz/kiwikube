@@ -1,0 +1,15 @@
+[Unit]
+Description=KiwiKube permanent archive for %I
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/kiwikube --collect --context %I
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+KillMode=mixed
+UMask=0077
+NoNewPrivileges=true
+
+[Install]
+WantedBy=default.target
