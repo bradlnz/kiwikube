@@ -1,0 +1,16 @@
+Generated with the built-in imagegen tool, using kiwikube-logo.png as the edit target.
+
+Use case: precise-object-edit
+Asset type: GitHub README mascot for KiwiKube, a Kubernetes terminal dashboard.
+Primary request: Change the supplied purple kiwi mascot so it is holding and steering one ship's wheel instead of game controllers.
+Input image: edit target, preserve the existing mascot identity and illustration style.
+Subject: cheerful fluffy purple kiwi bird with large cyan eyes, long lime-green beak and lime-green feet. Both wings naturally grip opposite handles of a single clearly recognizable nautical ship's wheel in front of its body. Wheel has a circular rim, central hub, and eight radial spokes with projecting handles; dark polished wood and subtle cyan metal accents fit the existing mascot.
+Composition: entire kiwi and entire wheel visible, centered with comfortable margins; readable at 320 pixels wide.
+Style: preserve polished vivid cartoon illustration, feather detail and cyan rim lighting.
+Constraints: genuinely transparent background; preserve purple/cyan/lime palette, face and friendly expression. Remove both game controllers entirely. No text, lettering, watermark, scenery, extra characters, or other props.
+
+Final background edit:
+
+Use case: precise-object-edit
+Edit target: supplied KiwiKube kiwi holding a ship's wheel.
+Change only the background: replace every white and gray checkerboard square with one seamless solid deep navy background (#101827), including the background visible between the feet and around wheel handles. No checkerboard, no transparency. Keep the purple kiwi, face, lime beak and feet, wheel, pose, composition, textures, and cyan lighting exactly unchanged. Clean polished README mascot artwork. No text or added objects.

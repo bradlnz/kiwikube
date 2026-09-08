@@ -1,21 +1,60 @@
-# KiwiKube
+<p align="center">
+  <img src="assets/kiwikube-captain.png" alt="A purple kiwi holding a ship's wheel" width="340">
+</p>
 
-A Kubernetes terminal dashboard in Go, with permanent history, searchable
-events and logs, rollout history, pod shells, SSH, and five quick cluster slots.
-It uses Go, native `kubectl` / `sqlite3` tools, and libvterm for embedded pod shells.
+<h1 align="center">KiwiKube</h1>
+
+<p align="center"><strong>Take the helm of your Kubernetes clusters.</strong></p>
+<p align="center">A Linux terminal dashboard with live resources, searchable history, and shells at your fingertips.</p>
+
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-a3e635?style=flat-square" alt="License: MIT"></a>
+  <a href="go.mod"><img src="https://img.shields.io/badge/Go-1.27-22d3ee?style=flat-square&amp;logo=go&amp;logoColor=white" alt="Go 1.27"></a>
+  <a href="#contributing"><img src="https://img.shields.io/badge/contributions-welcome-a78bfa?style=flat-square" alt="Contributions welcome"></a>
+</p>
+
+<p align="center">
+  <a href="#quick-start">Quick start</a> ·
+  <a href="#navigation-and-controls">Controls</a> ·
+  <a href="#customization">Customization</a> ·
+  <a href="#permanent-history">History</a> ·
+  <a href="#contributing">Contributing</a>
+</p>
+
+## Your cluster, within reach
+
+| | What you get |
+| --- | --- |
+| **Five cluster slots** | Switch contexts with Alt+1–5 without changing kubeconfig's global current-context. |
+| **Live resource views** | Browse workloads, networking, storage, events, and configuration with keyboard or mouse. |
+| **Logs that keep flowing** | Follow pod and Job output in a dedicated tab while you browse resources. |
+| **History that stays** | Search local SQLite archives of resource changes, events, and logs; export even when a cluster is offline. |
+| **A shell at hand** | Open embedded pod terminals or SSH into nodes using your existing access. |
+| **See the connections** | Inspect node and pod metrics, rollout history, and Ingress → Service → Pod routing. |
+
+![KiwiKube dashboard showing namespaces, pod readiness, status, and keyboard actions](screenshots/pods.png)
+
+## Quick start
+
+KiwiKube uses Go, native `kubectl` / `sqlite3` tools, and libvterm for embedded pod shells.
 Building requires a C compiler, pkg-config, and libvterm 0.3+ development headers
 (Arch: `libvterm pkgconf`; Debian/Ubuntu: `libvterm-dev pkg-config`).
-
-```sh
-./build.sh
-./kiwikube
-# Or run from source:
-./run.sh --theme ocean --refresh 10
-```
 
 Requires Go 1.27 to build; `kubectl`, `sqlite3` (3.38+ with FTS5), `stty`, and a
 Linux terminal to run. Node sessions also require `ssh`. The headless collector needs
 only `kubectl` and `sqlite3`. Set `archive_enabled` to false to run without SQLite.
+
+```sh
+git clone https://github.com/bradlnz/kiwikube.git
+cd kiwikube
+./build.sh
+./kiwikube
+
+# Or run from source:
+./run.sh --theme ocean --refresh 10
+```
+
+## Navigation and controls
 
 KiwiKube uses `KUBECONFIG` when set, otherwise detects `~/.kube/config`
 (including when kubectl is provided by K3s). It pins the current context for
@@ -55,6 +94,8 @@ deployments and related controllers also have a rollout history view.
 | Space / `r` | Pause automatic refresh / refresh now |
 | `?` / `q` | Help / quit (closes an open viewer first) |
 
+### Tabs, logs, and shells
+
 The top **File / Edit / View / Help** menus and bold bottom action labels are clickable,
 including **s shell**. Live status and cluster counts sit at the bottom. Namespace headings and resource
 identities have distinct colors, retained through refreshes and namespace additions. Logs open beside the
@@ -78,6 +119,8 @@ scrollback. Ctrl+C interrupts the foreground command; **Ctrl+]** or the modal
 close button ends the shell. SSH and the native configuration editor retain
 their full-terminal sessions.
 
+### Node and pod metrics
+
 Enter on a node opens a live **Node: name** tab with green-to-red CPU, memory,
 disk, receive, and transmit gauges alongside a formatted node description.
 On narrow screens the description follows the gauges; scroll to read it.
@@ -95,6 +138,8 @@ it. The panel requires room for both the table and metrics (hide the sidebar or
 widen a compact terminal). Usage comes from `metrics.k8s.io`; gauges compare with
 pod limits, or node capacity when no complete limit is set. Permission failures
 and missing metrics-server data are shown without substituting zero usage.
+
+### Events and configuration
 
 Events have dropdown filters: **All / 5m / 15m / 1h / 6h / 24h**, event type,
 search, and Reset. **T** opens time windows, **K** opens All/Warning/Normal;
@@ -118,12 +163,14 @@ using your current context and normal RBAC/admission policies. Secret YAML data
 remains base64; save and exit to reload the popup. Secret contents are never
 written to the archive.
 
+### Flow graph
+
 The **Flow** tab (**F**, or View → Flow graph) shows live Ingress → Service → Pod
 routing relationships for the selected namespace, using Ingress backends and
 Service label selectors. It shows missing backends and unmatched pods, and
 refreshes with cluster data. This is a routing map, not measured traffic.
 
-**Customization**
+## Customization
 
 Settings load from `$XDG_CONFIG_HOME/kiwikube/config.json`, normally
 `~/.config/kiwikube/config.json`. Defaults:
@@ -169,7 +216,7 @@ your normal OpenSSH configuration, keys, and host verification. An empty
 `ssh_user` leaves user selection to OpenSSH. Nodes need reachable SSH access;
 pod shells need Kubernetes exec permission and a shell in the selected container.
 
-**Permanent history**
+## Permanent history
 
 Recording is on by default and independent of which resource or logs you open.
 It stores all supported resource changes, deletion records, complete resource
@@ -230,7 +277,7 @@ resources deleted before initial collection, and data lost during an upstream
 history gap cannot be reconstructed. Keep the collector running for continuous
 coverage. [Kubernetes watch semantics](https://kubernetes.io/docs/reference/using-api/api-concepts/).
 
-**Performance**
+## Performance
 
 One private Unix-socket Kubernetes proxy shares authentication and HTTP
 connections across requests. Resource archives use long-lived watches; dashboard
@@ -269,7 +316,18 @@ Measured on the development machine (Core i5-8350U; synthetic data, one run):
 These include the native SQLite reader process for queries. Actual rates depend
 on log sizes, storage, and cluster load; the commands below reproduce the checks.
 
-**Checks**
+## Contributing
+
+Bug reports, documentation improvements, and pull requests are welcome.
+[Open an issue](https://github.com/bradlnz/kiwikube/issues) with steps to reproduce,
+your KiwiKube revision, and relevant terminal and Kubernetes versions. Remove
+credentials and private cluster data from any logs or screenshots you share.
+
+For code changes, fork the repository, create a branch, keep the change focused,
+and run the checks below before opening a pull request. Include a regression check
+for bug fixes and update this README when behavior changes.
+
+### Checks
 
 ```sh
 ./build.sh
@@ -286,3 +344,8 @@ log following, container selection,
 previous logs, shell input handoff, SSH, settings, resizing, partial permissions,
 terminal restoration, background archive capture, offline export, Alt+number
 switching, and mouse selection without touching a real cluster.
+
+## License
+
+KiwiKube is open source under the [MIT License](LICENSE).
+Use it, modify it, and share it. See the license for the full terms.
