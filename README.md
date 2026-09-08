@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/kiwikube-captain.png" alt="A purple kiwi holding a ship's wheel" width="340">
+  <img src="assets/kiwikube-captain.png" alt="A purple kiwi holding a ship's wheel" width="160">
 </p>
 
 <h1 align="center">KiwiKube</h1>
@@ -14,6 +14,7 @@
 </p>
 
 <p align="center">
+  <a href="#screenshots">Screenshots</a> ·
   <a href="#quick-start">Quick start</a> ·
   <a href="#navigation-and-controls">Controls</a> ·
   <a href="#customization">Customization</a> ·
@@ -32,7 +33,28 @@
 | **A shell at hand** | Open embedded pod terminals or SSH into nodes using your existing access. |
 | **See the connections** | Inspect node and pod metrics, rollout history, and Ingress → Service → Pod routing. |
 
-![KiwiKube dashboard showing namespaces, pod readiness, status, and keyboard actions](screenshots/pods.png)
+## Screenshots
+
+**Node stats at a glance.** CPU, memory, disk, and network gauges alongside
+node conditions and system details. Press Enter on a node to open this view.
+
+![KiwiKube node view with CPU, memory, disk, receive and transmit gauges beside formatted node details](screenshots/node-stats.png)
+
+<details>
+<summary>More views: pod metrics and routing</summary>
+
+**Pod metrics.** Inspect the selected pod's CPU and memory while browsing workloads.
+
+![KiwiKube pod list with the selected pod's CPU and memory metrics panel](screenshots/pod-metrics.png)
+
+**Flow graph.** Follow Ingress → Service → Pod routing relationships.
+
+![KiwiKube Flow tab showing ingress, service, and pod routing](screenshots/flow.png)
+
+</details>
+
+*Screenshots use demo cluster data. Network gauges show rates relative to the
+observed peak; the Flow graph shows routing relationships.*
 
 ## Quick start
 
