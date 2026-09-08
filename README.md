@@ -29,7 +29,7 @@
 | **Five cluster slots** | Switch contexts with Alt+1–5 without changing kubeconfig's global current-context. |
 | **Live resource views** | Browse workloads, networking, storage, events, and configuration with keyboard or mouse. |
 | **Pod management** | Inspect readiness and restarts, view Describe/YAML, switch containers, and open metrics, logs, or a shell. |
-| **Logs that keep flowing** | Follow pod and Job output in a dedicated tab while you browse resources. |
+| **Searchable live logs** | Follow pod and Job output, filter for errors with Ctrl+F, and keep streaming while you browse resources. |
 | **History that stays** | Search local SQLite archives of resource changes, events, and logs; export even when a cluster is offline. |
 | **A shell at hand** | Open embedded pod terminals or SSH into nodes using your existing access. |
 | **See the connections** | Inspect node and pod metrics, rollout history, and Ingress → Service → Pod routing. |
@@ -42,7 +42,7 @@ node conditions and system details. Press Enter on a node to open this view.
 ![KiwiKube node view with CPU, memory, disk, receive and transmit gauges beside formatted node details](screenshots/node-stats.png)
 
 <details>
-<summary>More views: pod management, shell access, and routing</summary>
+<summary>More views: pod management, log search, shell access, and routing</summary>
 
 **Pod management.** Browse pods by namespace, check readiness and restarts, and
 press `m` for CPU and memory metrics. Use `d` / `y` for Describe / YAML and `c`
@@ -50,10 +50,11 @@ to switch containers.
 
 ![KiwiKube pod list with the selected pod's CPU and memory metrics panel](screenshots/pod-metrics.png)
 
-**Pod logs.** Press Enter or `L` to follow output in a dedicated tab. Search with
-Ctrl+F, switch containers with `c`, or press `p` for the previous container's logs.
+**Find errors in live pod logs.** Press Enter or `L` to follow output, then
+Ctrl+F → type `ERROR` → Enter to show matching lines as logs continue streaming.
+Switch containers with `c`, or press `p` for the previous container's logs.
 
-![KiwiKube pod logs tab with colored log levels, container selection, and log controls](screenshots/pod-logs.png)
+![KiwiKube pod logs filtered to ERROR, showing matching error lines and the active search](screenshots/pod-log-search.png)
 
 **Shell access.** Select a pod and press `s` to open an interactive shell in its
 selected container. Run commands in the embedded terminal, then type `exit` or
